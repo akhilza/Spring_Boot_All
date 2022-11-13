@@ -1,4 +1,4 @@
-package com.akhil.Spring_Boot_All;
+package com.akhil.akhil;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
