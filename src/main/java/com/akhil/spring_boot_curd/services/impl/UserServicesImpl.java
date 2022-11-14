@@ -2,7 +2,6 @@ package com.akhil.spring_boot_curd.services.impl;
 
 import com.akhil.spring_boot_curd.dto.UserDto;
 import com.akhil.spring_boot_curd.entity.User;
-import com.akhil.spring_boot_curd.exception.NoFoundException;
 import com.akhil.spring_boot_curd.exception.NotFoundException;
 import com.akhil.spring_boot_curd.repository.UserRepository;
 import com.akhil.spring_boot_curd.services.UserService;
@@ -22,9 +21,8 @@ public class UserServicesImpl  implements UserService {
     }
 
 
-    @Override
-    public String saveUser(User user) {
-        userRepository.save(user);
+    public String saveUser(UserDto userDto) {
+         userRepository.save(dtoToEntity(userDto));
         return "Data Successfully Save";
     }
 
@@ -36,11 +34,7 @@ public class UserServicesImpl  implements UserService {
         return user;
     }
 
-    @Override
-    public User findByName(String name) {
-        User byName = userRepository.findByName(name);
-        return byName;
-    }
+
 
     @Override
     public List<User> findAll() {
@@ -48,18 +42,11 @@ public class UserServicesImpl  implements UserService {
         return all;
     }
 
-    @Override
-    public User updateUser(User user) {
-        User userUpdate = userRepository.findById(user.getFirst_id()).orElseThrow(() -> {
-            return new NotFoundException("Not Found Id");
-        });
-        userUpdate.setFirst_id(user.getFirst_id());
-        userUpdate.setFirstName(user.getFirstName());
-        userUpdate.setLastName(user.getLastName());
-        userUpdate.setEmail(user.getEmail());
-        userUpdate.setPassword(user.getPassword());
-        userUpdate.setDob(user.getDob());
-        return userRepository.save(userUpdate);
+    public User updateUser(UserDto userDto) {
+        User userUpdate = userRepository.findById(userDto.getId()).orElseThrow(() ->
+             new NotFoundException("Not Found Id")
+        );
+        return userRepository.save(dtoToEntity(userDto));
     }
 
     @Override
@@ -68,5 +55,18 @@ public class UserServicesImpl  implements UserService {
         return "User Successfully Delete By Id";
     }
 
+
+
+    public static User dtoToEntity(UserDto userDto){
+        User user=new User();
+        BeanUtils.copyProperties(userDto, user);
+        return user;
+    }
+
+    public static UserDto entityToDto(User user){
+        UserDto userDto=new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        return userDto;
+    }
 
 }
