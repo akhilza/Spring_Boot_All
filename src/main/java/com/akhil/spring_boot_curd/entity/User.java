@@ -7,14 +7,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Setter
-@Getter
-public class User implements Serializable {
+public @Data class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "first_id", nullable = false)
-    private Long first_id;
+    private Long id;
 
     private String firstName;
     private String lastName;

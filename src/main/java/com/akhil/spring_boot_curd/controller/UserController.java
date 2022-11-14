@@ -22,37 +22,33 @@ public class UserController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveUser(@RequestBody User user){
-        String saveData = userService.saveUser(user);
+    public ResponseEntity<String> saveUser(@RequestBody UserDto userDto){
+        String saveData = userService.saveUser(userDto);
         return new ResponseEntity<>(saveData, HttpStatus.CREATED);
     }
 
     @GetMapping("/id")
-    public ResponseEntity<?> findById(@PathVariable Long id){
+    public ResponseEntity<User> findById(@PathVariable Long id){
         User byId = userService.findById(id);
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
 
-    @GetMapping("/name")
-    public ResponseEntity<?> findByName(@PathVariable String name){
-        User byName = userService.findByName(name);
-        return new ResponseEntity<>(byName, HttpStatus.OK);
-    }
+
 
     @GetMapping("/all")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<List<User>> findAll(){
         List<User> all = userService.findAll();
         return new ResponseEntity<>(all,HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@RequestBody User user){
-        User userUpdate = userService.updateUser(user);
-        return new ResponseEntity<>(userUpdate,HttpStatus.OK);
+    public ResponseEntity<User> updateUser(@RequestBody UserDto userDto){
+        User user = userService.updateUser(userDto);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @GetMapping("/delete")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+    public ResponseEntity<String> deleteUser(@PathVariable Long id){
         String deleteUser = userService.deleteUser(id);
         return new ResponseEntity<>(deleteUser,HttpStatus.OK);
     }
