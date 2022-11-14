@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(name="user")
 public @Data class User implements Serializable {
 
     @Id
