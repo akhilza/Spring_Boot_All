@@ -27,13 +27,11 @@ public class UserController {
         return new ResponseEntity<>(saveData, HttpStatus.CREATED);
     }
 
-    @GetMapping("/id")
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable("id") Long id){
         User byId = userService.findById(id);
         return new ResponseEntity<>(byId, HttpStatus.OK);
     }
-
-
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> findAll(){
@@ -47,10 +45,10 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
         String deleteUser = userService.deleteUser(id);
-        return new ResponseEntity<>(deleteUser,HttpStatus.OK);
+        return new ResponseEntity<>(deleteUser,HttpStatus.FORBIDDEN);
     }
 
 
